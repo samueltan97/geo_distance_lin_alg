@@ -1,5 +1,8 @@
-import requests
+from geopy.geocoders import Nominatim
+from geopy.extra.rate_limiter import RateLimiter
+import os
 import math
+import requests
 
 
 class Location:
@@ -7,6 +10,18 @@ class Location:
     def __init__(self, data):
         self.latitude = data['lat']
         self.longitude = data['lng']
+
+
+def zip_code_to_long_lat(addresses):
+    geolocator = Nominatim(user_agent="geocoding", timeout=2)
+    geocode = RateLimiter(geolocator.geocode, min_delay_seconds=3)
+    location = []
+    for address in addresses:
+        print(address)
+        location.append(geolocator.geocode(address))
+    print(location)
+    return location
+
 
 
 def address_to_long_lat(addresses):
@@ -31,6 +46,12 @@ def develop_orthogonal_vector(origin: Location, point: Location):
 
 
 if __name__ == "__main__":
-    addresses = address_to_long_lat(["1325-1399 Diamond St, Philadelphia, PA 19122, USA",
-                                     "Broad St & York St, Philadelphia, PA 19132, United States"])
-    print(develop_orthogonal_vector(Location(addresses[0]), Location(addresses[1])))
+    addresses = address_to_long_lat(["Reading Terminal Market, PA, US",
+                                     "Race Street Pier, Philadelphia, PA, US",
+                                     "Pennsylvania Convention Center, Philadelphia, PA, US",
+                                     "12/13th & Locust Street Station, Philadelphia, PA, US"])
+    print(addresses)
+    print(develop_orthogonal_vector(Location(addresses[2]), Location(addresses[3])))
+    # URL = "https://maps.googleapis.com/maps/api/geocode/json"
+    # PARAMS = {'address': "1325-1399 Diamond St, Philadelphia, PA 19122, USA"}
+    # r = requests.get(url=URL, params=PARAMS)
