@@ -19,13 +19,14 @@ def calculate_manhattan_distance(origin: Location, point: Location, orthogonal_v
     print(lon1, lat1, lon2, lat2)
     b = np.array([lon2 - lon1, lat2 - lat1])
     print('b', b)
+    # find the coefficients to arrive at the mid-point between the two orthogonal vectors
     x = (np.linalg.solve(a, b)).tolist()
     print(x)
     mid_point = [i_hat[0] * x[0] + lon1, i_hat[1] * x[0] + lat1]
     return abs(haversine(lon1, lat1, mid_point[0], mid_point[1])) + abs(
         haversine(mid_point[0], mid_point[1], lon2, lat2))
 
-
+# calculate distance based on the standard haversine formula
 def haversine(lon1, lat1, lon2, lat2):
     dlon = lon2 - lon1
     dlat = lat2 - lat1
