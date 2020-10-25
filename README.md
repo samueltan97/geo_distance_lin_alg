@@ -1,4 +1,4 @@
-# geo_distance_lin_alg
+# Manhattan-Haversine Calculator
 
 ## Introduction
 
