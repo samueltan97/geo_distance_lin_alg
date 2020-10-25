@@ -13,6 +13,7 @@ class Location:
 
 
 def zip_code_to_long_lat(addresses):
+    # use geopy to convert the zip code to geo coordinates
     geolocator = Nominatim(user_agent="geocoding", timeout=2)
     geocode = RateLimiter(geolocator.geocode, min_delay_seconds=3)
     location = []
@@ -25,6 +26,7 @@ def zip_code_to_long_lat(addresses):
 
 
 def address_to_long_lat(addresses):
+    # use geopy to convert the full addresses to geo coordinates
     location = []
     for address in addresses:
         URL = "https://maps.googleapis.com/maps/api/geocode/json"
